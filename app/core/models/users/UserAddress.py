@@ -16,4 +16,4 @@ class UserAddress(BaseModel):
     zip_code: Mapped[str] = mapped_column(String(10), nullable=False)
     is_default: Mapped[bool] = mapped_column(Boolean, default=False)
 
-    user: Mapped["User"] = relationship(back_populates="addresses")
+    user: Mapped["User"] = relationship(back_populates='addresses')
