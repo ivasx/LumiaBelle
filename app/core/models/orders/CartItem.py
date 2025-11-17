@@ -1,8 +1,5 @@
-from typing import Optional
-
-from sqlalchemy import Integer, String, Text, Numeric, ForeignKey, UniqueConstraint
+from sqlalchemy import Integer, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
 from app.core.models.base import BaseModel
 
 

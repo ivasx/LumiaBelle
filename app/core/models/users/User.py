@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from sqlalchemy import Integer, String, Text, Numeric, ForeignKey, Boolean, DateTime, func
+from sqlalchemy import Integer, String, Boolean, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
 from app.core.models.base import BaseModel
@@ -18,6 +18,6 @@ class User(BaseModel):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
 
-    cart: Mapped["Cart"] = relationship(back_populates="user")
-    addresses: Mapped[List["UserAddress"]] = relationship(back_populates="user")
-    orders: Mapped[List["Order"]] = relationship(back_populates="user")
+    cart: Mapped["Cart"] = relationship(back_populates='user', uselist=False)
+    addresses: Mapped[List["UserAddress"]] = relationship(back_populates='user')
+    orders: Mapped[List["Order"]] = relationship(back_populates='user')
