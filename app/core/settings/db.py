@@ -7,7 +7,6 @@ from sqlalchemy.exc import SQLAlchemyError
 
 
 
-
 class Database:
    def __init__(self, url: str):
        self.url = url
@@ -50,3 +49,6 @@ class Database:
            return True
        except SQLAlchemyError:
            return False
+
+DATABASE_URL = "sqlite+aiosqlite:///./test.db"
+db = Database(url=DATABASE_URL)

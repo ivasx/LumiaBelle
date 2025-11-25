@@ -8,7 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.models.base import BaseModel
 
 
-class Order(BaseModel):
+class OrderModel(BaseModel):
     __tablename__ = 'order'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
@@ -18,6 +18,6 @@ class Order(BaseModel):
     status: Mapped[str] = mapped_column(String(50), nullable=False, default='Pending')
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, server_default=func.now())
 
-    user: Mapped['User'] = relationship(back_populates='orders')
-    address: Mapped['UserAddress'] = relationship()
-    items: Mapped[List['OrderItem']] = relationship(back_populates='order', cascade='all, delete-orphan')
+    user: Mapped['UserModel'] = relationship(back_populates='orders')
+    address: Mapped['UserAddressModel'] = relationship()
+    items: Mapped[List['OrderItemModel']] = relationship(back_populates='order', cascade='all, delete-orphan')

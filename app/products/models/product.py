@@ -6,11 +6,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.models.base import BaseModel
 
-from ..products.ProductVariant import ProductVariant
-from ..products.Category import Category
+from app.products.models.product_variant import ProductVariantModel
+from app.products.models.category import CategoryModel
 
 
-class Product(BaseModel):
+class ProductModel(BaseModel):
     __tablename__ = 'product'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
@@ -24,9 +24,9 @@ class Product(BaseModel):
     )
 
 
-    category: Mapped['Category'] = relationship(back_populates='products')
+    category: Mapped['CategoryModel'] = relationship(back_populates='products')
 
-    variants: Mapped[list['ProductVariant']] = relationship(
+    variants: Mapped[list['ProductVariantModel']] = relationship(
         back_populates='product',
         cascade='all, delete-orphan'
     )

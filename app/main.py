@@ -1,13 +1,12 @@
 from typing import Union
 from fastapi import FastAPI
 from pydantic import BaseModel as PydanticBaseModel
-from app.core.settings.db import Database
 from contextlib import asynccontextmanager
-from .core.models.base import BaseModel
 
+from app.core.settings.db import db
+from app.core.models.base import BaseModel
 
-DATABASE_URL = "sqlite+aiosqlite:///./test.db"
-
+from app.routers import api_router
 
 @asynccontextmanager
 async def lifespan(_fastapi_app: FastAPI):
@@ -17,9 +16,10 @@ async def lifespan(_fastapi_app: FastAPI):
    yield
    await db.disconnect()
 
-db = Database(url=DATABASE_URL)
+
 app = FastAPI(lifespan=lifespan)
 
+app.include_router(api_router, prefix="/api")
 
 class Item(PydanticBaseModel):
     name: str
@@ -33,16 +33,6 @@ async def health():
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
-
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    return {"item_name": item.name, "item_id": item_id}
 
 
 if __name__ == "__main__":
