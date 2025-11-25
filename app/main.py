@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 from app.core.settings.db import db
 from app.core.models.base import BaseModel
 
+import app.core.models
 from app.routers import api_router
 
 @asynccontextmanager
