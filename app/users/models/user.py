@@ -6,7 +6,7 @@ from datetime import datetime
 from app.core.models.base import BaseModel
 
 
-class User(BaseModel):
+class UserModel(BaseModel):
     __tablename__ = 'user'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
@@ -18,6 +18,6 @@ class User(BaseModel):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
 
-    cart: Mapped["Cart"] = relationship(back_populates='user', uselist=False)
-    addresses: Mapped[List["UserAddress"]] = relationship(back_populates='user')
-    orders: Mapped[List["Order"]] = relationship(back_populates='user')
+    cart: Mapped["CartModel"] = relationship(back_populates='user', uselist=False)
+    addresses: Mapped[List["UserAddressModel"]] = relationship(back_populates='user')
+    orders: Mapped[List["OrderModel"]] = relationship(back_populates='user')

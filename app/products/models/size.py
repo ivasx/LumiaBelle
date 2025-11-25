@@ -3,7 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.models.base import BaseModel
 
 
-class Size(BaseModel):
+class SizeModel(BaseModel):
     __tablename__ = 'size'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)

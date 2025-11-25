@@ -3,11 +3,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.models.base import BaseModel
 from typing import List
 
-class Cart(BaseModel):
+class CartModel(BaseModel):
     __tablename__ = 'cart'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'), unique=True)
 
-    user: Mapped["User"] = relationship(back_populates='cart')
-    items: Mapped[List["CartItem"]] = relationship(back_populates='cart', cascade='all, delete-orphan')
+    user: Mapped["UserModel"] = relationship(back_populates='cart')
+    items: Mapped[List["CartItemModel"]] = relationship(back_populates='cart', cascade='all, delete-orphan')

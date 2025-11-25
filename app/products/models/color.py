@@ -3,7 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.core.models.base import BaseModel
 
 
-class Color(BaseModel):
+class ColorModel(BaseModel):
     __tablename__ = 'color'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
