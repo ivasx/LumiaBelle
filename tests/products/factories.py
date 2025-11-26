@@ -11,14 +11,15 @@ class CategoryFactory(factory.alchemy.SQLAlchemyModelFactory):
         model = CategoryModel
         sqlalchemy_session_persistence = "commit"
 
-    name = factory.Faker("word")
+    name = factory.Sequence(lambda n: f"Category{n}")
+
 
 class SizeFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = SizeModel
         sqlalchemy_session_persistence = "commit"
 
-    label = factory.Faker("lexify", text="??")
+    label = factory.Sequence(lambda n: f"S{n}")
 
 
 class ColorFactory(factory.alchemy.SQLAlchemyModelFactory):
@@ -26,8 +27,8 @@ class ColorFactory(factory.alchemy.SQLAlchemyModelFactory):
         model = ColorModel
         sqlalchemy_session_persistence = "commit"
 
-    name = factory.Faker("color_name")
-    hex_code = factory.Faker("hex_color")
+    name = factory.Sequence(lambda n: f"Color{n}")
+    hex_code = factory.Sequence(lambda n: f"#{n:06x}")
 
 
 class ProductFactory(factory.alchemy.SQLAlchemyModelFactory):
@@ -37,7 +38,6 @@ class ProductFactory(factory.alchemy.SQLAlchemyModelFactory):
 
     title = factory.Faker("sentence", nb_words=3)
     description = factory.Faker("text")
-    # Генеруємо Decimal число для ціни
     price = factory.Faker(
         "pydecimal", left_digits=3, right_digits=2, positive=True
     )

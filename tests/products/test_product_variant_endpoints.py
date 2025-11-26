@@ -1,7 +1,8 @@
 import pytest
+import pytest_asyncio
 
 
-@pytest.fixture()
+@pytest_asyncio.fixture()
 async def variant_payload(product_factory, size_factory, color_factory, faker):
     product = await product_factory()
     size = await size_factory()

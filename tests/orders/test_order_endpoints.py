@@ -1,8 +1,9 @@
 import pytest
+import pytest_asyncio
 from datetime import datetime
 
 
-@pytest.fixture()
+@pytest_asyncio.fixture()
 async def order_payload(user_factory, user_address_factory, faker):
     user = await user_factory()
     address = await user_address_factory(user=user)

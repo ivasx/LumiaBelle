@@ -1,7 +1,8 @@
 import pytest
+import pytest_asyncio
 
 
-@pytest.fixture()
+@pytest_asyncio.fixture()
 async def address_payload(faker, user_factory):
     user = await user_factory()
     return {

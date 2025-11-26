@@ -1,7 +1,8 @@
 import pytest
+import pytest_asyncio
 
 
-@pytest.fixture()
+@pytest_asyncio.fixture()
 async def cart_item_payload(cart_factory, product_variant_factory, faker):
     cart = await cart_factory()
     variant = await product_variant_factory()

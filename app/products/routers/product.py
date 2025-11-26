@@ -8,6 +8,7 @@ from starlette import status
 from app.core.settings.db import db
 
 from ..models.product import ProductModel
+from ..models.category import CategoryModel
 from ..schemas.product import ProductResponseSchema, ProductCreateSchema, ProductPartialUpdateSchema
 
 SessionDepend = Annotated[AsyncSession, Depends(db.get_session)]
@@ -21,6 +22,13 @@ router = APIRouter(prefix="/products", tags=["products"])
     status_code=status.HTTP_201_CREATED,
 )
 async def create_product(product: ProductCreateSchema, session: SessionDepend):
+    result = await session.execute(
+        sqlalchemy.select(CategoryModel).where(CategoryModel.id == product.category_id)
+    )
+    category = result.scalars().first()
+    if not category:
+        raise HTTPException(status_code=400, detail="Invalid category_id or database constraint violated.")
+
     new_product = ProductModel(
         title=product.title,
         description=product.description,
@@ -70,6 +78,15 @@ async def update_product(product_id: int, product: ProductCreateSchema, session:
     existing_product = result.scalars().first()
     if not existing_product:
         raise HTTPException(status_code=404, detail="Product not found")
+
+    if product.category_id:
+        cat_result = await session.execute(
+            sqlalchemy.select(CategoryModel).where(CategoryModel.id == product.category_id)
+        )
+        category = cat_result.scalars().first()
+        if not category:
+            raise HTTPException(status_code=400, detail="Update failed due to database constraints.")
+
     for field, value in product.model_dump(exclude_unset=True).items():
         setattr(existing_product, field, value)
 
@@ -93,6 +110,15 @@ async def partial_update_product(product_id: int, product: ProductPartialUpdateS
     existing_product = result.scalars().first()
     if not existing_product:
         raise HTTPException(status_code=404, detail="Product not found")
+
+    if product.category_id:
+        cat_result = await session.execute(
+            sqlalchemy.select(CategoryModel).where(CategoryModel.id == product.category_id)
+        )
+        category = cat_result.scalars().first()
+        if not category:
+            raise HTTPException(status_code=400, detail="Update failed due to database constraints.")
+
     for field, value in product.model_dump(exclude_unset=True).items():
         setattr(existing_product, field, value)
 
