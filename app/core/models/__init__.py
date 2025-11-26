@@ -1,3 +1,4 @@
+from .base import BaseModel
 from app.users.models.user import UserModel
 from app.users.models.cart import CartModel
 from app.users.models.user_address import UserAddressModel
@@ -11,6 +12,7 @@ from app.products.models.size import SizeModel
 from app.products.models.color import ColorModel
 
 __all__ = [
+    "BaseModel",
     "UserModel",
     "CartModel",
     "UserAddressModel",
