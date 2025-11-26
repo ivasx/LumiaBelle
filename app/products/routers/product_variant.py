@@ -20,7 +20,6 @@ router = APIRouter(prefix="/product_variants", tags=["product_variants"])
     path="/",
     response_model=ProductVariantResponseSchema,
     status_code=status.HTTP_201_CREATED,
-    tags=["Product Variant"]
 )
 async def create_product_variant(variant: ProductVariantCreateSchema, session: SessionDepend):
     new_variant = ProductVariantModel(

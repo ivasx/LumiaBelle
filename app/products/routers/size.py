@@ -18,7 +18,6 @@ router = APIRouter(prefix="/sizes", tags=["sizes"])
     path="/",
     response_model=SizeResponseSchema,
     status_code=status.HTTP_201_CREATED,
-    tags=["Size"]
 )
 async def create_size(size: SizeCreateSchema, session: SessionDepend):
     new_size = SizeModel(

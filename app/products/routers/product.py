@@ -19,7 +19,6 @@ router = APIRouter(prefix="/products", tags=["products"])
     path="/",
     response_model=ProductResponseSchema,
     status_code=status.HTTP_201_CREATED,
-    tags=["Product"]
 )
 async def create_product(product: ProductCreateSchema, session: SessionDepend):
     new_product = ProductModel(

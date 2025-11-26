@@ -19,7 +19,6 @@ router = APIRouter(prefix="/order_items", tags=["order_items"])
     path="/",
     response_model=OrderItemResponseSchema,
     status_code=status.HTTP_201_CREATED,
-    tags=["Order Item"]
 )
 async def create_order_item(order_item: OrderItemCreateSchema, session: SessionDepend):
     new_order_item = OrderItemModel(

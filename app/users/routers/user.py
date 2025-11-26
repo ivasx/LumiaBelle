@@ -11,16 +11,39 @@ from ..models.user import UserModel
 from ..schemas.user import UserResponseSchema, UserCreateSchema, UserPartialUpdateSchema
 from app.utils.encrypt import hash_password
 
+from fastapi.security import OAuth2PasswordRequestForm
+from app.utils.encrypt import verify_password
 SessionDepend = Annotated[AsyncSession, Depends(db.get_session)]
 
 router = APIRouter(prefix="/users", tags=["users"])
 
+@router.post("/login", tags=["auth"])
+async def login(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    session: SessionDepend
+):
+
+    result = await session.execute(
+        sqlalchemy.select(UserModel).where(UserModel.email == form_data.username)
+    )
+    user = result.scalars().first()
+
+    if not user or not verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    return {
+        "access_token": user.email,
+        "token_type": "bearer"
+    }
 
 @router.post(
     path="/",
     response_model=UserResponseSchema,
     status_code=status.HTTP_201_CREATED,
-    tags=["Users"]
 )
 async def create_user(user: UserCreateSchema, session: SessionDepend):
     hashed_pass = hash_password(user.password)

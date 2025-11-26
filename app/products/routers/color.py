@@ -19,7 +19,6 @@ router = APIRouter(prefix="/colors", tags=["colors"])
     path="/",
     response_model=ColorResponseSchema,
     status_code=status.HTTP_201_CREATED,
-    tags=["Color"]
 )
 async def create_color(color: ColorCreateSchema, session: SessionDepend):
     new_color = ColorModel(

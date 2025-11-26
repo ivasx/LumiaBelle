@@ -19,7 +19,6 @@ router = APIRouter(prefix="/carts", tags=["carts"])
     path="/",
     response_model=CartResponseSchema,
     status_code=status.HTTP_201_CREATED,
-    tags=["Cart"]
 )
 async def create_cart(cart: CartCreateSchema, session: SessionDepend):
     new_cart = CartModel(

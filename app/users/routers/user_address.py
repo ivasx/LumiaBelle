@@ -18,7 +18,6 @@ router = APIRouter(prefix="/user_addresses", tags=["user_addresses"])
     path="/",
     response_model=UserAddressResponseSchema,
     status_code=status.HTTP_201_CREATED,
-    tags=["User Address"]
 )
 async def create_user_address(address: UserAddressCreateSchema, session: SessionDepend):
     new_address = UserAddressModel(
